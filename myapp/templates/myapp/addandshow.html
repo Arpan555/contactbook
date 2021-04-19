@@ -1,0 +1,53 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<div>
+ <div>
+  <h4>Add New Contact</h4>
+  <form action="" method="POST">
+   {% csrf_token %}
+   {{form.as_p}}
+   <input type="submit" value="Add">
+  </form>
+ </div>
+ <hr>
+
+ <div>
+  <h4>Show Contact Information</h4>
+  {% if stu %}
+   <table>
+     <thead>
+       <tr>
+         <th>Id</th>
+         <th>Name</th>
+         <th>Email</th>
+         <th>Number</th>
+         <th>Address</th>
+         <th>Action</th>
+       </tr>
+     </thead>
+     <tbody>
+      {% for st in stu %}
+       <tr>
+         <td>{{st.id}}</td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <td>{{st.name}}</td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <td>{{st.email}}</td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <td>{{st.number}}</td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <td>{{st.address}}</td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+         <td>
+         <a href="{% url 'updatedata' st.id %}" class="btn btn-warning btn-sm">Edit</a> &nbsp&nbsp&nbsp
+         <form action="{% url 'deletedata' st.id %}" method="post" class="d-inline"> {% csrf_token %}
+          <input type="submit" value="Delete">
+         </form>
+         </td>
+       </tr>
+      {% endfor %}
+     </tbody>
+   </table>
+
+  {% else %}
+   <h4 >No Records</h4>
+  {% endif %}
+ </div>
+
+</div>
+{% endblock content %}
